@@ -21,8 +21,8 @@ class S3Storage {
     }
 
     async saveFile(fileName: string): Promise<void> {
-        // const originalPath = path.resolve(`dist/tmp/${fileName}`);
-        const originalPath = path.resolve(`src/tmp/${fileName}`);
+        const originalPath = path.resolve(`dist/tmp/${fileName}`);
+        // const originalPath = path.resolve(`src/tmp/${fileName}`);
 
         try {
             const contentType = mime.getType(originalPath);
