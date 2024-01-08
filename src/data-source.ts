@@ -43,7 +43,10 @@ const dataSourceConfig = (): DataSourceOptions => {
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
-        synchronize: true
+        synchronize: true,
+        ssl: {
+            rejectUnauthorized: false, // Esta opção permite conexões com certificados autoassinados
+        },
     }
 }
 
