@@ -92,6 +92,36 @@ class UserController {
         }
 
     }
+    static async uploadPrint(req: Request, res: Response): Promise<void | any> {
+        try {
+            const response = await UserService.sendPrint(req)
+
+            return res.status(200).send(response)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+    static async uploadDocumentFront(req: Request, res: Response): Promise<void | any> {
+        try {
+            const response = await UserService.sendDocumentFront(req)
+
+            return res.status(200).send(response)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+    static async uploadDocumentBack(req: Request, res: Response): Promise<void | any> {
+        try {
+            const response = await UserService.sendDocumentBack(req)
+
+            return res.status(200).send(response)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
 
 

@@ -102,6 +102,9 @@ class UserService {
             avatar: user.avatar,
             app_vip: user.app_vip,
             token: token,
+            hani_print: user.hani_print,
+            document_back: user.document_back,
+            document_front: user.document_front
         };
 
 
@@ -148,6 +151,58 @@ class UserService {
         await s3Storage.saveFile(req.file.filename)
 
         user.avatar = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+
+        await this.userRepository.save(user)
+
+        return user
+    }
+
+    static async sendPrint(req: any) {
+        const user = await this.userRepository.findOne({ where: { id: req.params.id } })
+
+        if (!req.file) {
+            throw new AppError("Nenhuma Imagem enviada", 400)
+        }
+
+        const s3Storage = new S3Storage()
+
+        await s3Storage.saveFile(req.file.filename)
+
+        user.hani_print = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+
+        await this.userRepository.save(user)
+
+        return user
+    }
+    static async sendDocumentFront(req: any) {
+        const user = await this.userRepository.findOne({ where: { id: req.params.id } })
+
+        if (!req.file) {
+            throw new AppError("Nenhuma Imagem enviada", 400)
+        }
+
+        const s3Storage = new S3Storage()
+
+        await s3Storage.saveFile(req.file.filename)
+
+        user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+
+        await this.userRepository.save(user)
+
+        return user
+    }
+    static async sendDocumentBack(req: any) {
+        const user = await this.userRepository.findOne({ where: { id: req.params.id } })
+
+        if (!req.file) {
+            throw new AppError("Nenhuma Imagem enviada", 400)
+        }
+
+        const s3Storage = new S3Storage()
+
+        await s3Storage.saveFile(req.file.filename)
+
+        user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         await this.userRepository.save(user)
 
