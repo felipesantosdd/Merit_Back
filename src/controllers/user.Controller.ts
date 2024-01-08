@@ -65,6 +65,36 @@ class UserController {
             }
         }
     }
+
+    static async updateUser(req: Request, res: Response): Promise<Response> {
+        try {
+
+            const data = await UserService.updatedUser(req.params.id, req.body)
+            return res.status(200).json(data)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({
+                    error: error.message
+                })
+            } else {
+                return res.status(400).json({ erro: error.message })
+            }
+        }
+    }
+
+    static async uploadImage(req: Request, res: Response): Promise<void | any> {
+        try {
+            const response = await UserService.uploadImage(req)
+
+            return res.status(200).send(response)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+
+
 }
 
 export default UserController

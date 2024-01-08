@@ -1,9 +1,16 @@
 import UserController from "../controllers/user.Controller"
 import { Router } from "express"
+import isAuthenticated from "../middlewares/isAuthenticated"
+import multer from 'multer';
+import multerConfig from '../config/multer';
 
 export const userRoutes = Router()
 
-userRoutes.get("/", UserController.getAll)
-userRoutes.post("/", UserController.create)
-userRoutes.get("/:id", UserController.getById)
+const upload = multer(multerConfig);
+
+userRoutes.get("/", isAuthenticated, UserController.getAll)
+userRoutes.post("/register", UserController.create)
+userRoutes.get("/:id", isAuthenticated, UserController.getById)
 userRoutes.post("/login", UserController.login)
+userRoutes.patch("/update/:id", isAuthenticated, UserController.updateUser)
+userRoutes.patch("/update/image/:id", isAuthenticated, upload.single('file'), UserController.uploadImage)

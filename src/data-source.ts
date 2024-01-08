@@ -43,7 +43,7 @@ const dataSourceConfig = (): DataSourceOptions => {
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
-        synchronize: false
+        synchronize: true
     }
 }
 
