@@ -139,9 +139,9 @@ class UserService {
 
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
-        //  if (!req.file) {
-        //      return res.status(400).json({ error: 'Nenhuma imagem enviada' });
-        //  }
+        if (!req.file) {
+            throw new AppError("Nenhuma Imagem enviada", 400)
+        }
 
         const s3Storage = new S3Storage()
 
