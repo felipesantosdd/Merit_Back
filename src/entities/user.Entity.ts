@@ -43,6 +43,15 @@ export class User {
     @Column({ type: "varchar", default: "https://conteudo.imguol.com.br/blogs/174/files/2018/05/iStock-648229868-1024x909.jpg" })
     avatar: string
 
+    @Column({ type: "varchar", nullable: true })
+    document_front: string
+
+    @Column({ type: "varchar", nullable: true })
+    document_back: string
+
+    @Column({ type: "varchar", nullable: true })
+    hani_print: string
+
     @Column({ type: "float", default: 0 })
     balance: number
 

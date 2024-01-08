@@ -18,7 +18,10 @@ export type IUser = {
     isAdmin: boolean
     avatar: string
     age: Date
-    app_vip: boolean | undefined
+    app_vip: boolean | undefined,
+    hani_print: string | undefined
+    document_back: string | undefined
+    document_front: string | undefined
 }
 
 export type appVipType = {
@@ -67,6 +70,9 @@ export type ILoginResponse = Pick<IUser,
     | "received"
     | "isAdmin"
     | "avatar"
+    | "hani_print"
+    | "document_back"
+    | "document_front"
     | "app_vip"> & {
         token: string
     }
