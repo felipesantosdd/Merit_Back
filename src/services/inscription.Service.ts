@@ -15,7 +15,7 @@ class InscriptionService {
         })
 
         if (alreadySended) {
-            throw new AppError("Sua solicitação ja foi enviada, aguarde a aprovacao!")
+            throw new AppError("Sua solicitação ja foi enviada, aguarde a aprovacao!  Devido à alta procura, o prazo de análise é de 10 dias úteis. Entraremos em contato para o cadastro quando seu perfil for selecionado!")
         }
 
         data.nome.toLowerCase()

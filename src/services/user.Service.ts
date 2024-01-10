@@ -108,6 +108,9 @@ class UserService {
             is_recruiter: user.is_recruiter,
             recruits: user.recruits,
             stand_by: user.stand_by,
+            pix_key: user.pix_key,
+            pix_name: user.pix_name,
+            pix_type: user.pix_type,
         };
 
 
@@ -173,6 +176,8 @@ class UserService {
 
         user.hani_print = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
+        user.stand_by = true
+
         await this.userRepository.save(user)
 
         return user
@@ -190,6 +195,8 @@ class UserService {
 
         user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
+        user.stand_by = true
+
         await this.userRepository.save(user)
 
         return user
@@ -206,6 +213,8 @@ class UserService {
         await s3Storage.saveFile(req.file.filename)
 
         user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+
+        user.stand_by = true
 
         await this.userRepository.save(user)
 

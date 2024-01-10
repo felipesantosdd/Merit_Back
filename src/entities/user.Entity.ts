@@ -59,8 +59,17 @@ export class User {
     @Column({ type: "varchar", nullable: true })
     hani_print: string
 
-    @Column({ type: "float", default: 0 })
+    @Column({ type: "int", default: 0 })
     balance: number
+
+    @Column({ type: "varchar", nullable: true })
+    pix_key: string
+
+    @Column({ type: "varchar", nullable: true })
+    pix_name: string
+
+    @Column({ type: "varchar", nullable: true })
+    pix_type: string
 
     @Column({ type: "boolean", default: false })
     isAdmin: boolean
