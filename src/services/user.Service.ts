@@ -107,6 +107,7 @@ class UserService {
             document_front: user.document_front,
             is_recruiter: user.is_recruiter,
             recruits: user.recruits,
+            stand_by: user.stand_by,
         };
 
 

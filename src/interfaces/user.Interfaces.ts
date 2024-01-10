@@ -24,6 +24,7 @@ export type IUser = {
     document_front: string | undefined
     recruits: IUser[]
     is_recruiter: boolean
+    stand_by: boolean
 }
 
 export type appVipType = {
@@ -76,6 +77,7 @@ export type ILoginResponse = Pick<IUser,
     | "document_front"
     | "recruits"
     | "is_recruiter"
+    | "stand_by"
     | "app_vip"> & {
         token: string
     }
