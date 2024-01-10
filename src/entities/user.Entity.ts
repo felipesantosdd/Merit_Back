@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Message } from "./message.Entity"
 
 @Entity()
@@ -28,8 +28,15 @@ export class User {
     @Column({ type: "varchar", default: undefined, nullable: true })
     app_name: string
 
-    @Column({ type: "varchar", nullable: true })
-    recruiter: User
+
+    @Column({ type: "boolean", default: false })
+    is_recruiter: boolean
+
+    @ManyToOne(() => User, user => user.recruits)
+    manager: User;
+
+    @OneToMany(() => User, user => user.manager, { nullable: true })
+    recruits: User[];
 
     @Column({ type: "date", nullable: true })
     age: Date

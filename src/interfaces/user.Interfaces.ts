@@ -8,7 +8,7 @@ export type IUser = {
     password?: string // Updated property name
     app_id: string | undefined
     app_name: string | undefined
-    recruiter: IUser
+    manager: IUser
     active: boolean
     approved: boolean
     balance: number
@@ -22,6 +22,8 @@ export type IUser = {
     hani_print: string | undefined
     document_back: string | undefined
     document_front: string | undefined
+    recruits: IUser[]
+    is_recruiter: boolean
 }
 
 export type appVipType = {
@@ -42,7 +44,6 @@ export type INewUserResponse = Pick<
     | "nome"
     | "sobrenome"
     | "email"
-    | "recruiter"
     | "active"
     | "balance"
     | "isAdmin"
@@ -61,7 +62,7 @@ export type ILoginResponse = Pick<IUser,
     | "id"
     | "app_id"
     | "app_name"
-    | "recruiter"
+    | "manager"
     | "active"
     | "approved"
     | "balance"
@@ -73,6 +74,8 @@ export type ILoginResponse = Pick<IUser,
     | "hani_print"
     | "document_back"
     | "document_front"
+    | "recruits"
+    | "is_recruiter"
     | "app_vip"> & {
         token: string
     }

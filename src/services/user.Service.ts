@@ -88,7 +88,7 @@ class UserService {
             nome: user.nome,
             sobrenome: user.sobrenome,
             email: user.email,
-            recruiter: user.recruiter,
+            manager: user.manager,
             active: user.active,
             balance: user.balance,
             sended: user.sended,
@@ -98,13 +98,15 @@ class UserService {
             isAdmin: user.isAdmin,
             age: user.age,
             app_id: user.app_id,
-            approved: user.approved, // Adicione as propriedades ausentes
+            approved: user.approved,
             avatar: user.avatar,
             app_vip: user.app_vip,
             token: token,
             hani_print: user.hani_print,
             document_back: user.document_back,
-            document_front: user.document_front
+            document_front: user.document_front,
+            is_recruiter: user.is_recruiter,
+            recruits: user.recruits,
         };
 
 
