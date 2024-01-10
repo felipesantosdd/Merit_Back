@@ -48,7 +48,8 @@ class UserService {
 
     static async getById(id: string): Promise<INewUserResponse> {
         let user = await this.userRepository.findOne({
-            where: { id: id }
+            where: { id: id },
+            relations: { received: true }
         })
 
         if (!user) {

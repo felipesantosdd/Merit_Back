@@ -10,3 +10,10 @@ export interface IMessage {
     createdAt: Date
     updatedAt: Date
 }
+
+export interface IMessageRequest {
+    text: string | null
+    subject: string | null
+    sender: string
+    recipient: string
+}

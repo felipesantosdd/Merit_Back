@@ -14,10 +14,10 @@ export class Message {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ type: "varchar", length: 600, nullable: true })
+    @Column({ type: "varchar", length: 600, nullable: false })
     text: string
 
-    @Column({ type: "text", nullable: true })
+    @Column({ type: "text", nullable: false })
     subject: string
 
     @ManyToOne(() => User, (user) => user.sended, { onDelete: "CASCADE" })

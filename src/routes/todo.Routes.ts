@@ -1,11 +1,11 @@
-// import ToDoController from "../controllers/todo.Controller"
-// import { Router } from "express"
-// import isAuthenticated from "../middlewares/isAuthenticated"
+import { Router } from "express";
+import isAuthenticated from "../middlewares/isAuthenticated";
+import MessageController from "../controllers/message.Controller";
 
-// export const todoRoutes = Router()
+const messageRoutes = Router()
 
-// todoRoutes.get("/", isAuthenticated, ToDoController.getAll)
-// todoRoutes.post("/", isAuthenticated, ToDoController.create)
-// todoRoutes.get("/:id", isAuthenticated, ToDoController.getById)
-// todoRoutes.patch("/:id", isAuthenticated, ToDoController.update)
-// todoRoutes.delete("/:id", isAuthenticated, ToDoController.delete)
+messageRoutes.get('/', isAuthenticated, MessageController.getAll)
+messageRoutes.post('/', isAuthenticated, MessageController.create)
+messageRoutes.delete('/:id', isAuthenticated, MessageController.delete)
+
+export default messageRoutes
