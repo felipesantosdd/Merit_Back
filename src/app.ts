@@ -2,7 +2,7 @@ import express, { Application } from "express"
 import cors from "cors"
 import { userRoutes } from "./routes/user.Routes"
 import inscriptionRoutes from "./routes/inscriptions.Routes"
-import messageRoutes from "./routes/todo.Routes"
+import messageRoutes from "./routes/message.Routes"
 
 const app: Application = express()
 app.use(express.json())
