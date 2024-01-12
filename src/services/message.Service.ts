@@ -40,7 +40,7 @@ class MessageService {
 
     }
 
-    static async getAll(userId: string): Promise<IMessage[]> {
+    static async getAll(): Promise<IMessage[]> {
         return await this.messageRepository.find()
     }
 
