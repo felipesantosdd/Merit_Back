@@ -3,21 +3,16 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Message } from "./message.Entity"
 
 @Entity()
-export class TextVip {
+export class Ask {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
     @Column({ type: "varchar" })
-    nome: string
+    title: string
 
-    @Column({ type: "number", nullable: true })
-    horas: number
+    @Column({ type: "varchar", nullable: true })
+    response: string
 
-    @Column({ type: "varchar" })
-    celular: string
-
-    @Column({ type: "varchar" })
-    contato: string
 }
 
-export default TextVip
+export default Ask

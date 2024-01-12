@@ -40,20 +40,21 @@ class MessageService {
 
     }
 
-    static async getAll(): Promise<IMessage[]> {
+    static async getAll(userId: string): Promise<IMessage[]> {
         return await this.messageRepository.find()
     }
 
-    static async delete(id: string): Promise<void> {
-        const message = await this.messageRepository.findOne({
-            where: { id: id }
-        })
+    static async delete(userId: string): Promise<void> {
+        // const message: IMessage[] = await this.messageRepository.find({
 
-        if (!message) {
-            throw new AppError("Message not found", 404)
-        }
+        //     relations: { recipient: true, sender: true }
+        // })
 
-        await this.messageRepository.delete(message)
+        // if (!message) {
+        //     throw new AppError("Message not found", 404)
+        // }
+
+        // await this.messageRepository.delete(message)
         return
     }
 }
