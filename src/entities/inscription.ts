@@ -10,7 +10,7 @@ export class TextVip {
     @Column({ type: "varchar" })
     nome: string
 
-    @Column({ type: "number", nullable: true })
+    @Column({ type: "int", nullable: true })
     horas: number
 
     @Column({ type: "varchar" })
