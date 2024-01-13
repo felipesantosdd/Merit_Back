@@ -36,14 +36,37 @@ class UserService {
         return newUser
     }
 
-    static async getAll(): Promise<IUser[]> {
-        const users = await this.userRepository.find()
-        if (users.length <= 0) {
-            throw new AppError("Ainda sem usuarios cadastrados", 404)
-        } else if (!users) {
-            throw new AppError("Algo deu errado", 400)
+    static async getAll(query: any): Promise<{ users: IUser[], totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null }> {
+        const page: number = Number(query.page) || 1;
+        const itemsPerPage: number = 10;
+
+        // Calcula o número total de usuários
+        const totalUsers = await this.userRepository.count();
+
+        // Calcula o número total de páginas
+        const totalPages = Math.ceil(totalUsers / itemsPerPage);
+
+        // Verifica se a página solicitada está dentro dos limites válidos
+        if (page < 1 || page > totalPages) {
+            throw new Error('Página inválida');
         }
-        return users
+
+        // Consulta os usuários com paginação
+        const users = await this.userRepository.find({
+            take: itemsPerPage,
+            skip: itemsPerPage * (page - 1),
+            order: {
+                nome: 'ASC'
+            }
+        });
+
+        return {
+            users,
+            totalPages,
+            currentPage: page,
+            nextPage: page === totalPages ? null : page + 1,
+            prevPage: page === 1 ? null : page - 1
+        };
     }
 
     static async getById(id: string): Promise<INewUserResponse> {

@@ -21,7 +21,7 @@ class UserController {
 
     static async getAll(req: Request, res: Response): Promise<Response> {
         try {
-            const users: IUser[] = await UserService.getAll()
+            const users: { totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null } = await UserService.getAll(req.query)
             return res.status(200).json(users)
         } catch (error) {
             if (error instanceof AppError) {
