@@ -40,21 +40,45 @@ class MessageService {
 
     }
 
-    static async getAll(): Promise<IMessage[]> {
-        return await this.messageRepository.find()
+    static async getAll(query: any): Promise<{ messages: IMessage[], totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null }> {
+        const page: number = Number(query.page) || 1
+        const itemsPerPage: number = 10;
+
+        const totalMessages = await this.messageRepository.count();
+
+        const totalPages = Math.ceil(totalMessages / itemsPerPage);
+
+        if (page < 1 || page > totalMessages) {
+            throw new Error('Página inválida');
+        }
+
+        const messages = await this.messageRepository.find({
+            take: itemsPerPage,
+            skip: itemsPerPage * (page - 1),
+            order: {
+                createdAt: "DESC"
+            }
+        })
+
+        return {
+            messages,
+            totalPages,
+            currentPage: page,
+            nextPage: page === totalPages ? null : page + 1,
+            prevPage: page === 1 ? null : page - 1
+        };
     }
 
-    static async delete(userId: string): Promise<void> {
-        // const message: IMessage[] = await this.messageRepository.find({
+    static async delete(messageId: string): Promise<void> {
+        const message: IMessage = await this.messageRepository.findOne({
+            where: { id: messageId }
+        })
 
-        //     relations: { recipient: true, sender: true }
-        // })
+        if (!message) {
+            throw new AppError("Message not found", 404)
+        }
 
-        // if (!message) {
-        //     throw new AppError("Message not found", 404)
-        // }
-
-        // await this.messageRepository.delete(message)
+        await this.messageRepository.delete(message)
         return
     }
 }

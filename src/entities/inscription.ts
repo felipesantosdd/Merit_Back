@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Message } from "./message.Entity"
 
 @Entity()
@@ -18,6 +18,10 @@ export class TextVip {
 
     @Column({ type: "varchar" })
     contato: string
+
+    @CreateDateColumn()
+    createdAt: Date
+
 }
 
 export default TextVip

@@ -13,6 +13,7 @@ export type IUser = {
     approved: boolean
     balance: number
     ranking: number
+    createdAt: Date
     sended: IMessage[]
     received: IMessage[]
     isAdmin: boolean
@@ -20,8 +21,9 @@ export type IUser = {
     age: Date
     app_vip: boolean | undefined,
     hani_print: string | undefined
-    document_back: string | undefined
-    document_front: string | undefined
+    document_back: string,
+    document_front: string,
+    selfie: string,
     recruits: IUser[]
     is_recruiter: boolean
     stand_by: boolean,
@@ -84,6 +86,7 @@ export type ILoginResponse = Pick<IUser,
     | "pix_key"
     | "pix_name"
     | "pix_type"
+    | "selfie"
     | "app_vip"> & {
         token: string
     }

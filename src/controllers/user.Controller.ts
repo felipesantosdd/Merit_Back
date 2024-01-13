@@ -18,6 +18,35 @@ class UserController {
             }
         }
     }
+    static async getTopUsers(req: Request, res: Response): Promise<Response> {
+        try {
+            const user: IUser[] = await UserService.getTopUsers(req.body.appName)
+            return res.status(201).json(user)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({
+                    error: error.message
+                })
+            } else {
+                return res.status(400).json({ erro: error.message })
+            }
+        }
+    }
+
+    static async recruiting(req: Request, res: Response): Promise<Response> {
+        try {
+            const user: INewUserResponse = await UserService.recruiting(req.params.id, req.body)
+            return res.status(201).json(user)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({
+                    error: error.message
+                })
+            } else {
+                return res.status(400).json({ erro: error.message })
+            }
+        }
+    }
 
     static async getAll(req: Request, res: Response): Promise<Response> {
         try {
@@ -37,6 +66,23 @@ class UserController {
     static async getById(req: Request, res: Response): Promise<Response> {
         try {
             const user: INewUserResponse = await UserService.getById(
+                req.params.id
+            )
+            return res.status(200).json(user)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({
+                    error: error.message
+                })
+            } else {
+                return res.status(400).json({ erro: error.message })
+            }
+        }
+    }
+
+    static async getByAppId(req: Request, res: Response): Promise<Response> {
+        try {
+            const user: INewUserResponse = await UserService.getByAppId(
                 req.params.id
             )
             return res.status(200).json(user)

@@ -16,6 +16,52 @@ import { Request } from "express"
 class UserService {
     static userRepository = AppDataSource.getRepository(User)
 
+    static async getTopUsers(appName: string): Promise<IUser[]> {
+        const topUsers = await this.userRepository.find({
+            where: { app_name: appName },
+            take: 10,
+            order: {
+                ranking: 'DESC', // Isso ordenará do maior para o menor ranking
+            },
+        });
+
+        return topUsers;
+    }
+
+    static async recruiting(userId: string, newUserData: INewUserRequest): Promise<IUser> {
+        const emailUsed = await this.userRepository.findOne({
+            where: { email: newUserData.email }
+        })
+
+        if (emailUsed) {
+            throw new AppError("Este email já está sendo usado", 409)
+        }
+
+        const user = await this.userRepository.findOne({
+            where: { id: userId }
+        })
+
+        if (!user) {
+            throw new AppError('Este Link não é mais valido')
+        }
+
+
+        newUserData.nome.toLowerCase()
+
+        const salt = genSaltSync(10)
+        newUserData.password = hashSync(newUserData.password, salt)
+        const newUser = this.userRepository.create(newUserData)
+
+        newUser.manager = user
+
+        await this.userRepository.save(newUser)
+
+        user.recruits.push(newUser)
+        await this.userRepository.save(user)
+
+        return newUser
+    }
+
     static async create(newUserData: INewUserRequest): Promise<IUser> {
         const emailUsed = await this.userRepository.findOne({
             where: { email: newUserData.email }
@@ -38,7 +84,7 @@ class UserService {
 
     static async getAll(query: any): Promise<{ users: IUser[], totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null }> {
         const page: number = Number(query.page) || 1;
-        const itemsPerPage: number = 10;
+        const itemsPerPage: number = 5;
 
         // Calcula o número total de usuários
         const totalUsers = await this.userRepository.count();
@@ -56,13 +102,13 @@ class UserService {
             take: itemsPerPage,
             skip: itemsPerPage * (page - 1),
             order: {
-                nome: 'ASC'
+                createdAt: 'DESC'
             }
         });
 
         return {
-            users,
-            totalPages,
+            users: users,
+            totalPages: totalPages,
             currentPage: page,
             nextPage: page === totalPages ? null : page + 1,
             prevPage: page === 1 ? null : page - 1
@@ -72,7 +118,23 @@ class UserService {
     static async getById(id: string): Promise<INewUserResponse> {
         let user = await this.userRepository.findOne({
             where: { id: id },
-            relations: { received: true }
+            relations: { received: true, manager: true, recruits: true }
+        })
+
+        if (!user) {
+            throw new AppError("Usuario nao encontrado", 400)
+        }
+
+        //  eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { password, ...response } = user
+
+        return response
+    }
+
+    static async getByAppId(id: string): Promise<INewUserResponse> {
+        let user = await this.userRepository.findOne({
+            where: { app_id: id },
+            relations: { received: true, manager: true, recruits: true }
         })
 
         if (!user) {
@@ -90,7 +152,7 @@ class UserService {
             where: {
                 email: data.email
             },
-            relations: ["received", "sended"]
+            relations: { received: true, manager: true, sended: true, recruits: true }
         })
         if (!user) {
             throw new AppError("Usuário e/ou senha inválidos", 401)
@@ -135,6 +197,7 @@ class UserService {
             pix_key: user.pix_key,
             pix_name: user.pix_name,
             pix_type: user.pix_type,
+            selfie: user.selfie,
         };
 
 
@@ -206,6 +269,7 @@ class UserService {
 
         return user
     }
+
     static async sendDocumentFront(req: any) {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
@@ -225,6 +289,7 @@ class UserService {
 
         return user
     }
+
     static async sendDocumentBack(req: any) {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 

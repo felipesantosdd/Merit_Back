@@ -1,13 +1,15 @@
 import { AppError } from "../error";
-import { IInscription, INewInscription } from "../interfaces/inscriptions.interfaces";
+import { IMessage } from "../interfaces/message.Interface";
 import InscriptionService from "../services/inscription.Service";
 import { Request, Response } from "express"
+import WarningsService from "../services/warning.Service";
+import { INewWarning } from "../interfaces/warnings.Interfaces";
 
-class InscriptionController {
+class WarningController {
     static async create(req: Request, res: Response): Promise<Response> {
         try {
-            const subscription: IInscription = await InscriptionService.create(req.body);
-            return res.status(201).json(subscription)
+            const newWarning: INewWarning = await WarningsService.create(req.body);
+            return res.status(201).json(newWarning)
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
@@ -23,8 +25,8 @@ class InscriptionController {
     static async getAll(req: Request, res: Response): Promise<Response> {
 
         try {
-            const subscriptions = await InscriptionService.getAll(req.query)
-            return res.status(200).json(subscriptions)
+            const warning = await WarningsService.getAll(req.query)
+            return res.status(200).json(warning)
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
@@ -40,7 +42,7 @@ class InscriptionController {
 
     static async delete(req: Request, res: Response): Promise<Response> {
         try {
-            await InscriptionService.delete(req.params.id)
+            await WarningsService.delete(req.params.id)
             return res.status(200).send()
         } catch (error) {
             if (error instanceof AppError) {
@@ -56,4 +58,4 @@ class InscriptionController {
 }
 
 
-export default InscriptionController
+export default WarningController

@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Message } from "./message.Entity"
 
 @Entity()
@@ -28,6 +28,9 @@ export class User {
     @Column({ type: "varchar", default: undefined, nullable: true })
     app_name: string
 
+    @CreateDateColumn()
+    createdAt: Date
+
 
     @Column({ type: "boolean", default: false })
     is_recruiter: boolean
@@ -55,6 +58,9 @@ export class User {
 
     @Column({ type: "varchar", default: 'https://marechaldeodoro.al.gov.br/wp-content/uploads/2021/07/5403d5db454f9a10fda8e7ec60da16600f78698ba3697.png' })
     document_back: string
+
+    @Column({ type: "varchar", default: 'https://marechaldeodoro.al.gov.br/wp-content/uploads/2021/07/5403d5db454f9a10fda8e7ec60da16600f78698ba3697.png' })
+    selfie: string
 
     @Column({ type: "varchar", nullable: true })
     hani_print: string

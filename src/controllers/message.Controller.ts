@@ -24,7 +24,7 @@ class MessageController {
     static async getAll(req: Request, res: Response): Promise<Response> {
 
         try {
-            const messages = await MessageService.getAll()
+            const messages = await MessageService.getAll(req.query)
             return res.status(200).json(messages)
         } catch (error) {
             if (error instanceof AppError) {

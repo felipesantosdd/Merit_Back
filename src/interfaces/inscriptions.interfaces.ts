@@ -6,6 +6,8 @@ export interface IInscription {
     horas: number
     celular: string
     contato: string
+    createdAt: Date
+
 }
 
 export type INewInscription = Pick<IInscription,
