@@ -280,15 +280,19 @@ class UserService {
     static async sendDocumentFront(req: any) {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
-        if (!req.file) {
-            throw new AppError("Nenhuma Imagem enviada", 400)
+        if (!req.front || !req.back || !req.selfie) {
+            throw new AppError("Faltam Arquivos", 400)
         }
 
         const s3Storage = new S3Storage()
 
-        await s3Storage.saveFile(req.file.filename)
+        await s3Storage.saveFile(req.front.filename)
+        await s3Storage.saveFile(req.back.filename)
+        await s3Storage.saveFile(req.selfie.filename)
 
-        user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+        user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.front?.filename}`
+        user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.back?.filename}`
+        user.selfie = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.selfie?.filename}`
 
         user.stand_by = true
 
