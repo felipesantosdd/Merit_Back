@@ -1,4 +1,5 @@
 import { AppDataSource } from "../data-source"
+import { classToPlain } from 'class-transformer';
 import User from "../entities/user.Entity"
 import { AppError } from "../error"
 import {
@@ -28,7 +29,7 @@ class UserService {
         return topUsers;
     }
 
-    static async recruiting(userId: string, newUserData: INewUserRequest): Promise<IUser> {
+    static async recruiting(userId: string, newUserData: INewUserRequest): Promise<any> {
         const emailUsed = await this.userRepository.findOne({
             where: { email: newUserData.email }
         })
@@ -56,10 +57,16 @@ class UserService {
 
         await this.userRepository.save(newUser)
 
+        if (user.recruits === undefined) {
+            user.recruits = []
+        }
+
         user.recruits.push(newUser)
         await this.userRepository.save(user)
 
-        return newUser
+        const userWithoutCircularReferences = classToPlain(newUser);
+
+        return userWithoutCircularReferences
     }
 
     static async create(newUserData: INewUserRequest): Promise<IUser> {

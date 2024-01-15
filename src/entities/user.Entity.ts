@@ -1,6 +1,7 @@
 import "reflect-metadata"
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Message } from "./message.Entity"
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -39,6 +40,7 @@ export class User {
     manager: User;
 
     @OneToMany(() => User, user => user.manager, { nullable: true })
+    @Exclude()
     recruits: User[];
 
     @Column({ type: "date", nullable: true })
