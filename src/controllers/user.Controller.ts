@@ -168,6 +168,16 @@ class UserController {
         }
 
     }
+    static async uploadSelfie(req: Request, res: Response): Promise<void | any> {
+        try {
+            const response = await UserService.sendSelfie(req)
+
+            return res.status(200).send(response)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
 
 

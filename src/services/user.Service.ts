@@ -280,19 +280,15 @@ class UserService {
     static async sendDocumentFront(req: any) {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
-        if (!req.front || !req.back || !req.selfie) {
-            throw new AppError("Faltam Arquivos", 400)
+        if (!req.front) {
+            throw new AppError("Erro ao Enviar Frente do Documento", 400)
         }
 
         const s3Storage = new S3Storage()
 
-        await s3Storage.saveFile(req.front.filename)
-        await s3Storage.saveFile(req.back.filename)
-        await s3Storage.saveFile(req.selfie.filename)
+        await s3Storage.saveFile(req.file.filename)
 
-        user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.front?.filename}`
-        user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.back?.filename}`
-        user.selfie = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.selfie?.filename}`
+        user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
 
@@ -305,7 +301,7 @@ class UserService {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
         if (!req.file) {
-            throw new AppError("Nenhuma Imagem enviada", 400)
+            throw new AppError("Erro ao Enviar Verso  do Documento", 400)
         }
 
         const s3Storage = new S3Storage()
@@ -313,6 +309,26 @@ class UserService {
         await s3Storage.saveFile(req.file.filename)
 
         user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+
+        user.stand_by = true
+
+        await this.userRepository.save(user)
+
+        return user
+    }
+
+    static async sendSelfie(req: any) {
+        const user = await this.userRepository.findOne({ where: { id: req.params.id } })
+
+        if (!req.file) {
+            throw new AppError("Erro ao Enviar Selfie", 400)
+        }
+
+        const s3Storage = new S3Storage()
+
+        await s3Storage.saveFile(req.file.filename)
+
+        user.selfie = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
 
