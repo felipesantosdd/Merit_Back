@@ -29,13 +29,13 @@ export class User {
     @Column({ type: "varchar", default: undefined, nullable: true })
     app_name: string
 
-    @CreateDateColumn({ default: new Date() })
-    createdAt: Date
+    @CreateDateColumn({ type: 'date', default: () => 'CURRENT_DATE' })
+    createdAt: Date;
 
-    @CreateDateColumn({ default: new Date() })
-    updatedAt: Date
+    @CreateDateColumn({ type: 'date', default: () => 'CURRENT_DATE' })
+    updatedAt: Date;
 
-    @Column({ default: false })
+    @Column({ type: 'boolean', default: false })
     paymentRequested: boolean;
 
     @Column({ type: "boolean", default: false })
