@@ -231,8 +231,6 @@ class UserService {
                 }
             }
 
-            user.updatedAt = new Date()
-
             await this.userRepository.save(user)
 
             return user
