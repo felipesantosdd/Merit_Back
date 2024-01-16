@@ -138,7 +138,7 @@ class UserService {
         return response
     }
 
-    static async getByAppId(id: string): Promise<INewUserResponse> {
+    static async getByAppId(id: string): Promise<{ users: IUser[], totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null }> {
         let user = await this.userRepository.findOne({
             where: { app_id: id },
             relations: { received: true, manager: true, recruits: true }
@@ -151,7 +151,16 @@ class UserService {
         //  eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...response } = user
 
-        return response
+
+
+        return {
+            users: [user],
+            totalPages: 0,
+            currentPage: 1,
+            nextPage: null,
+            prevPage: null
+        };
+
     }
 
     static async login(data: ILoginRequest): Promise<ILoginResponse> {

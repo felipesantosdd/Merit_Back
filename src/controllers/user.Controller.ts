@@ -82,7 +82,7 @@ class UserController {
 
     static async getByAppId(req: Request, res: Response): Promise<Response> {
         try {
-            const user: INewUserResponse = await UserService.getByAppId(
+            const user: { users: IUser[], totalPages: number, currentPage: number, nextPage: number | null, prevPage: number | null } = await UserService.getByAppId(
                 req.params.id
             )
             return res.status(200).json(user)
