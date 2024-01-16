@@ -280,7 +280,7 @@ class UserService {
     static async sendDocumentFront(req: any) {
         const user = await this.userRepository.findOne({ where: { id: req.params.id } })
 
-        if (!req.front) {
+        if (!req.file) {
             throw new AppError("Erro ao Enviar Frente do Documento", 400)
         }
 

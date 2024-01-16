@@ -31,5 +31,5 @@ userRoutes.patch("/update/documentFront/:id", isAuthenticated, upload.single('fi
 
 userRoutes.patch("/update/documentBack/:id", isAuthenticated, upload.single('file'), UserController.uploadDocumentBack)
 
-userRoutes.patch("/update/documentBack/:id", isAuthenticated, upload.single('file'), UserController.uploadSelfie)
+userRoutes.patch("/update/documentSelfie/:id", isAuthenticated, upload.single('file'), UserController.uploadSelfie)
 

@@ -52,16 +52,16 @@ export class User {
     @Column({ type: "boolean", default: false })
     approved: boolean
 
-    @Column({ type: "varchar", default: "https://conteudo.imguol.com.br/blogs/174/files/2018/05/iStock-648229868-1024x909.jpg" })
+    @Column({ type: "varchar", default: "https://queropack.com/assets/img/img-doc-front.jpg" })
     avatar: string
 
-    @Column({ type: "varchar", default: 'https://marechaldeodoro.al.gov.br/wp-content/uploads/2021/07/5403d5db454f9a10fda8e7ec60da16600f78698ba3697.png' })
+    @Column({ type: "varchar", default: 'https://queropack.com/assets/img/img-doc-back.jpg' })
     document_front: string
 
     @Column({ type: "varchar", default: 'https://marechaldeodoro.al.gov.br/wp-content/uploads/2021/07/5403d5db454f9a10fda8e7ec60da16600f78698ba3697.png' })
     document_back: string
 
-    @Column({ type: "varchar", default: 'https://marechaldeodoro.al.gov.br/wp-content/uploads/2021/07/5403d5db454f9a10fda8e7ec60da16600f78698ba3697.png' })
+    @Column({ type: "varchar", default: 'https://queropack.com/assets/img/img-selfie.jpg' })
     selfie: string
 
     @Column({ type: "varchar", nullable: true })

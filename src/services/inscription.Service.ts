@@ -63,7 +63,10 @@ class InscriptionService {
             throw new AppError("inscription not found", 404)
         }
 
-        await this.textRepository.delete(inscription)
+        await this.textRepository.remove(inscription)
+
+        console.log(inscription)
+
         return
     }
 }
