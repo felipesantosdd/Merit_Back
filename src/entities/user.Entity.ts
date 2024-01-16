@@ -29,9 +29,14 @@ export class User {
     @Column({ type: "varchar", default: undefined, nullable: true })
     app_name: string
 
-    @CreateDateColumn()
+    @CreateDateColumn({ default: new Date() })
     createdAt: Date
 
+    @CreateDateColumn({ default: new Date() })
+    updatedAt: Date
+
+    @Column({ default: false })
+    paymentRequested: boolean;
 
     @Column({ type: "boolean", default: false })
     is_recruiter: boolean

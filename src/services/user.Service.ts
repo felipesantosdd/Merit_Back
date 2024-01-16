@@ -109,7 +109,7 @@ class UserService {
             take: itemsPerPage,
             skip: itemsPerPage * (page - 1),
             order: {
-                createdAt: 'DESC'
+                updatedAt: 'DESC'
             }
         });
 
@@ -205,6 +205,9 @@ class UserService {
             pix_name: user.pix_name,
             pix_type: user.pix_type,
             selfie: user.selfie,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            paymentRequested: user.paymentRequested,
         };
 
 
@@ -227,6 +230,8 @@ class UserService {
                     }
                 }
             }
+
+            user.updatedAt = new Date()
 
             await this.userRepository.save(user)
 
@@ -251,6 +256,7 @@ class UserService {
         await s3Storage.saveFile(req.file.filename)
 
         user.avatar = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
+        user.updatedAt = new Date()
 
         await this.userRepository.save(user)
 
@@ -271,6 +277,7 @@ class UserService {
         user.hani_print = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
+        user.updatedAt = new Date()
 
         await this.userRepository.save(user)
 
@@ -291,6 +298,7 @@ class UserService {
         user.document_front = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
+        user.updatedAt = new Date()
 
         await this.userRepository.save(user)
 
@@ -311,6 +319,7 @@ class UserService {
         user.document_back = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
+        user.updatedAt = new Date()
 
         await this.userRepository.save(user)
 
@@ -331,6 +340,7 @@ class UserService {
         user.selfie = `https://dianealmeida-modelos.s3.us-east-2.amazonaws.com/${req.file?.filename}`
 
         user.stand_by = true
+        user.updatedAt = new Date()
 
         await this.userRepository.save(user)
 
