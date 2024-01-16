@@ -31,6 +31,16 @@ class InscriptionService {
 
         const totalInscriptions = await this.textRepository.count();
 
+        if (totalInscriptions === 0) {
+            return {
+                inscriptions: [],
+                totalPages: 0,
+                currentPage: page,
+                nextPage: null,
+                prevPage: null
+            };
+        }
+
         const totalPages = Math.ceil(totalInscriptions / itemsPerPage);
 
         if (page < 1 || page > totalInscriptions) {
@@ -44,6 +54,8 @@ class InscriptionService {
                 createdAt: "DESC"
             }
         })
+
+
 
         return {
             inscriptions: inscriptions,
@@ -64,8 +76,6 @@ class InscriptionService {
         }
 
         await this.textRepository.remove(inscription)
-
-        console.log(inscription)
 
         return
     }
