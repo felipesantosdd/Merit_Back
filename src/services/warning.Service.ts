@@ -11,7 +11,7 @@ class WarningsService {
 
     static async create(req: any): Promise<IWarning> {
 
-        const data: INewWarning = req.data
+        const data: INewWarning = req.body
 
         const alreadySended = await this.warningsRepository.findOne({
             where: {
@@ -47,8 +47,18 @@ class WarningsService {
 
         const totalWarnings = await this.warningsRepository.count();
 
+        if (totalWarnings === 0) {
+            return {
+                Warnings: [],
+                totalPages: 0,
+                currentPage: page,
+                nextPage: null,
+                prevPage: null
+            };
+        }
 
         const totalPages = Math.ceil(totalWarnings / itemsPerPage);
+
 
 
         if (page < 1 || page > totalPages) {
@@ -81,7 +91,7 @@ class WarningsService {
             throw new AppError("warning not found", 404)
         }
 
-        await this.warningsRepository.delete(warning)
+        await this.warningsRepository.delete({ id: warning.id })
         return
     }
 }

@@ -4,12 +4,12 @@ import multer from 'multer';
 import multerConfig from '../config/multer';
 import WarningController from "../controllers/warning.Controllers";
 
-export const warningrRoutes = Router()
+export const warningRoutes = Router()
 
 const upload = multer(multerConfig);
 
-warningrRoutes.get("/find", WarningController.create)
+warningRoutes.get("/find", WarningController.getAll)
 
-warningrRoutes.post("/create", isAuthenticated, upload.single('file'), WarningController.getAll)
+warningRoutes.post("/create", isAuthenticated, upload.single('file'), WarningController.create)
 
-warningrRoutes.delete("/delete/:id", isAuthenticated, WarningController.delete)
+warningRoutes.delete("/delete/:id", isAuthenticated, WarningController.delete)

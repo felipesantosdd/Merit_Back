@@ -1,4 +1,4 @@
-import { IUser } from "./user.Interfaces"
+
 
 export interface IWarning {
     id: string

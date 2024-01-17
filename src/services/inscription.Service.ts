@@ -75,7 +75,7 @@ class InscriptionService {
             throw new AppError("inscription not found", 404)
         }
 
-        await this.textRepository.remove(inscription)
+        await this.textRepository.delete({ id: inscription.id })
 
         return
     }

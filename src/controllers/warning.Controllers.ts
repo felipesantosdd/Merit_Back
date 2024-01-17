@@ -8,7 +8,7 @@ import { INewWarning } from "../interfaces/warnings.Interfaces";
 class WarningController {
     static async create(req: Request, res: Response): Promise<Response> {
         try {
-            const newWarning: INewWarning = await WarningsService.create(req.body);
+            const newWarning: INewWarning = await WarningsService.create(req);
             return res.status(201).json(newWarning)
         } catch (error) {
             if (error instanceof AppError) {

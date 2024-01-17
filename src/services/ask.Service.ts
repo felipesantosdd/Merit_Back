@@ -38,7 +38,7 @@ class AskService {
             throw new AppError("ask not found", 404)
         }
 
-        await this.askRepository.delete(ask)
+        await this.askRepository.delete({ id: ask.id })
         return
     }
 }
