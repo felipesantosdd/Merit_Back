@@ -91,6 +91,9 @@ export class User {
     stand_by: boolean
 
     @Column({ type: "boolean", default: false })
+    app_vip_inscription: boolean
+
+    @Column({ type: "boolean", default: false })
     app_vip: boolean
 
     @OneToMany(() => Message, (message) => message.sender)

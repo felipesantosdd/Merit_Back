@@ -217,6 +217,7 @@ class UserService {
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
             paymentRequested: user.paymentRequested,
+            app_vip_inscription: user.app_vip_inscription
         };
 
 

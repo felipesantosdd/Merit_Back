@@ -32,6 +32,7 @@ export type IUser = {
     pix_type: string | undefined
     paymentRequested: boolean
     updatedAt: Date
+    app_vip_inscription: boolean
 }
 
 export type appVipType = {
@@ -92,6 +93,7 @@ export type ILoginResponse = Pick<IUser,
     | "paymentRequested"
     | "updatedAt"
     | "createdAt"
+    | "app_vip_inscription"
     | "app_vip"> & {
         token: string
     }
