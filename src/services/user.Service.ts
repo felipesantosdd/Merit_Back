@@ -22,7 +22,7 @@ class UserService {
             where: { app_name: appName },
             take: 10,
             order: {
-                balance: 'DESC', // Isso ordenará do maior para o menor ranking
+                ranking: 'DESC', // Isso ordenará do maior para o menor ranking
             },
         });
 
@@ -233,11 +233,19 @@ class UserService {
                 throw new AppError("User not found", 404)
             }
 
+            const currentBalance = user.balance;
+
             for (const key in data) {
                 if (Object.prototype.hasOwnProperty.call(data, key)) {
                     if (key in user) {
                         user[key] = data[key]
                     }
+                }
+            }
+
+            if (data.balance !== undefined) {
+                if (data.balance > currentBalance) {
+                    user.ranking += data.balance - currentBalance;
                 }
             }
 
