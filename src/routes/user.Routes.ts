@@ -13,7 +13,7 @@ userRoutes.post("/register", UserController.create)
 
 userRoutes.post("/recruiting/:id", UserController.recruiting)
 
-userRoutes.get("topUsers", UserController.getTopUsers)
+userRoutes.get("/topUsers", UserController.getTopUsers)
 
 userRoutes.get("/:id", isAuthenticated, UserController.getById)
 

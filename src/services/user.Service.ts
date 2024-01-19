@@ -22,7 +22,7 @@ class UserService {
             where: { app_name: appName },
             take: 10,
             order: {
-                ranking: 'DESC', // Isso ordenará do maior para o menor ranking
+                balance: 'DESC', // Isso ordenará do maior para o menor ranking
             },
         });
 
